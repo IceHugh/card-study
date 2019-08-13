@@ -1,0 +1,24 @@
+:root {
+  --title-size: 30px;
+  --minor-title: 18px;
+  --text-size: 14px;
+  --border-radius-main: 10px;
+  --border-radius-button: 4px;
+  --color-1: #222831;
+  --color-2: #393e46;
+  --color-3: #00adb5;
+  --color-4: #eeeeee;
+}
+.theme__black {
+  --color-1: #222831;
+  --color-2: #393e46;
+  --color-3: #00adb5;
+  --color-4: #eeeeee;
+  color: var(--color-4);
+}
+.theme__white {
+  --main-bg: rgba(210, 210, 210, 0.9);
+  --main-color: rgba(20, 20, 20, 1);
+  --minor-color: rgba(100, 100, 100, 1);
+  --text-color: rgba(60, 60, 60, 1);
+}
