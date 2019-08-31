@@ -8,7 +8,7 @@ import './styles/toast.css';
 
 toast.configure({
   position: 'top-right',
-  autoClose: 10000,
+  autoClose: 3000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,

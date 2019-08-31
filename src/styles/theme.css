@@ -8,6 +8,22 @@
   --color-2: #393e46;
   --color-3: #00adb5;
   --color-4: #eeeeee;
+
+  --tui-color-main: #fff;
+  --tui-color-minor: #586d74;
+  --tui-color-p: #fdf6e3;
+  --tui-color-h1: #fdf6e3;
+  --tui-color-h: #fdf6e3;
+  --tui-color-bq: #fdf6e3;
+  --tui-color-code: #2aa197;
+  --tui-color-table: #6c6ec6;
+  --tui-color-td: #6c6ec6;
+  --tui-bg-main: #002833;
+  --tui-bg-pre: #003440;
+  --tui-bg-th: #002833;
+  --tui-border-pre: #e8ebed;
+  --tui-border-th: #72777b;
+  --tui-border-hr: #eee;
 }
 .theme__black {
   --color-1: #222831;

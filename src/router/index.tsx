@@ -3,17 +3,22 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import loadable from '@loadable/component';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import 'styles/route.css';
-import Login from 'pages/Login';
+// import Login from 'pages/Login';
 
 interface Routes {
   path: string;
   component?: FC | any;
 }
-const Map = loadable(() => import('../pages/Map'));
+const CardEditor = loadable(() => import('../pages/CardEditor'));
+const CardList = loadable(() => import('../pages/CardList'));
 const routes: Routes[] = [
   {
+    path: '/editor',
+    component: CardEditor,
+  },
+  {
     path: '/',
-    component: Map,
+    component: CardList,
   },
 ];
 const router = () => {

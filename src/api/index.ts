@@ -1,56 +1,41 @@
+import { CardData } from 'types';
 import Ajax from './fetch_until';
 interface LoginData {
-  username: string,
-  password: string
+  username: string;
+  password: string;
 }
-interface PostQuery {
-  id?: string;
-  title: string | null;
-  content: string;
-  desc?: string;
-  tags?: string[];
-  category?: string[];
-  time?: Date | number;
+interface CardQueryId {
+  id: string;
 }
-interface PostsParams {
-  tag?: string;
-  category?: string;
+interface CardQueryTitle {
+  title: string;
 }
-interface PostId {
-  'id': string;
+interface CardsQuery {
+  catetory?: string;
 }
+
 export default {
-  login(data: LoginData) {
-    return Ajax.post('login', {
-      json: data
-    });
-  },
-  postPost(data: PostQuery) {
-    return Ajax.post('post', {
+  createCard(data: CardData) {
+    return Ajax.post('card', {
       json: data,
     });
   },
-  patchPost(data: PostQuery) {
-    console.log(data);
-    return Ajax.patch('post', {
-      json: data,
-    });
-  },
-  deletePost(data: PostId) {
-    return Ajax.delete('post', {
+  findCard(data: CardQueryId | CardQueryTitle) {
+    return Ajax.get('card', {
       searchParams: {
         ...data,
       },
     });
   },
-  getPosts() {
-    return Ajax.get('posts');
+  findCards(data?: CardsQuery) {
+    let config = {};
+    if (data) {
+      config = {
+        searchParams: {
+          ...data,
+        },
+      };
+    }
+    return Ajax.get('cards', config);
   },
-  getPostDetail(data: PostId) {
-    return Ajax.get('post', {
-      searchParams: {
-        ...data,
-      },
-    });
-  }
 };

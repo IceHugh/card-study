@@ -9,7 +9,7 @@ const CompressionPlugin = require('compression-webpack-plugin');
 //     style: 'css',
 //   }),
 // );
-module.exports = function override(config, env) {
+module.exports = function(config, env) {
   config.plugins = (config.plugins || []).concat([
     new CompressionPlugin({
       test: /\.js(\?.*)?$/i,
@@ -17,6 +17,12 @@ module.exports = function override(config, env) {
       threshold: 8192,
     }),
   ]);
+  const test = fixBabelImports('import', {
+    libraryName: 'antd',
+    libraryDirectory: 'es',
+    style: 'css',
+  });
+  const _config = test(config);
   // config.optimization = Object.assign(config.optimization, {
   //   minimizer: [
   //     new TerserPlugin({
@@ -30,5 +36,5 @@ module.exports = function override(config, env) {
   //     }),
   //   ],
   // })
-  return config;
+  return _config;
 };

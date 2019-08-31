@@ -7,8 +7,8 @@ import './styles/layout.css';
 class App extends Component {
   render() {
     return (
-      <main className="theme__black app__container">
-        <div className="router__container">
+      <main className='theme__black app__container'>
+        <div className='router__container'>
           <Router />
         </div>
       </main>

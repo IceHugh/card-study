@@ -14,4 +14,8 @@ declare module 'classnames';
 declare module 'react-transition-group';
 declare module 'md5';
 declare module 'react-toastify';
-
+declare namespace JSX {
+  interface IntrinsicElements {
+    string: any;
+  }
+}

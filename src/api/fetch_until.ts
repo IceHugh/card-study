@@ -1,15 +1,15 @@
 import ky from 'ky';
-import localForage from "localforage";
+import localForage from 'localforage';
 import { toast } from 'react-toastify';
 
 const api = ky.create({
   prefixUrl: process.env.REACT_APP_HOST,
   hooks: {
     beforeRequest: [
-      async options  => {
+      async options => {
         const token = await localForage.getItem('token');
         const headers: any = options.headers;
-        headers.set('Authorization', `Bearer ${token}`)
+        headers.set('Authorization', `Bearer ${token}`);
         console.log(options);
       },
     ],
@@ -27,20 +27,19 @@ const api = ky.create({
             } else {
               throw new Error(data);
             }
-          } else{
+          } else {
             throw new Error('Fetch error:');
           }
         } else {
-          if(status === 401) {
+          if (status === 401) {
             toast('登录失效，重新登录！', {
               onClick: () => {
                 window.location.href = '/admin';
-              }
+              },
             });
-          } 
-          throw new Error(`Fetch error: ${response.statusText}`, );
+          }
+          throw new Error(`Fetch error: ${response.statusText}`);
         }
-
       },
     ],
   },

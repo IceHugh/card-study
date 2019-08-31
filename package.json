@@ -22,7 +22,9 @@
     "react-router-dom": "^5.0.0",
     "react-toastify": "^5.3.1",
     "react-transition-group": "^4.1.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "tui-editor": "^1.4.6",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@types/jest": "24.0.13",
@@ -57,7 +59,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged &&  && npx git-cz"
+      "pre-commit": "lint-staged && npx git-cz"
     }
   },
   "lint-staged": {
