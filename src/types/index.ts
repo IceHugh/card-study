@@ -1,7 +1,7 @@
 export interface CardData {
   id?: string;
   ulid: string;
-  auth?: string;
+  authName?: string;
   title: string;
   desc: string;
   type: string;
@@ -20,9 +20,10 @@ export interface ItemData {
 }
 
 export interface CategoryData {
-  category: string;
+  name: string;
   date: string | number;
-  auth: string;
+  authName: string;
+  authId: string;
   desc?: string;
   ulid: string;
   type: string;

@@ -8,22 +8,43 @@ import {
   CardsHorz,
   CategoryList,
   CategoryForm,
+  LoginForm,
+  Avatar,
 } from 'components';
 import { ItemData, CategoryData } from 'types';
 import categoryManage from 'utils/categoryManage';
+import { toast } from 'react-toastify';
 
 const PageContainer = styled.main`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: #000;
   position: relative;
+`;
+const GridBox = styled.div`
+  width: 100%;
+  height: 100%;
   display: grid;
+  overflow: hidden;
   grid-template-columns: 200px 1fr;
   grid-template-rows: 1fr 300px 1fr;
   grid-template-areas: 'a b' 'a c' 'a d';
 `;
-const CardsBox = styled.div`
+const GridA = styled.div`
+  grid-area: a;
+`;
+const GridB = styled.div`
+  grid-area: b;
+  border-left: 2px solid var(--color-3);
+  border-bottom: 2px solid var(--color-3);
+  box-shadow: 0 0 10px 0 var(--color-3) inset;
+  border-bottom-left-radius: 10px;
+  overflow: hidden;
+  display: flex;
+`;
+const GridC = styled.div`
   width: 100%;
+  min-width: 100%;
   grid-area: c;
 `;
 const GridD = styled.div`
@@ -44,17 +65,6 @@ const GridDRight = styled.div`
   justify-content: center;
   flex: 1;
 `;
-const GridB = styled.div`
-  grid-area: b;
-  border-left: 2px solid var(--color-3);
-  border-bottom: 2px solid var(--color-3);
-  box-shadow: 0 0 10px 0 var(--color-3) inset;
-  border-bottom-left-radius: 10px;
-  overflow: hidden;
-`;
-const GridA = styled.div`
-  grid-area: a;
-`;
 const FormBox = styled.div`
   border-top-left-radius: 10px;
   height: 100%;
@@ -72,6 +82,8 @@ const CardList = (props: RouteComponentProps) => {
   const initCaregeorys: CategoryData[] = [];
   const [categorys, setCategorys] = useState(initCaregeorys);
   const [categoryShow, setCategoryShow] = useState(false);
+  const [loginShow, setLoginShow] = useState(false);
+  const [loginFormType, setLoginFormType] = useState('login');
   const itemClick = (item: ItemData) => {
     console.log(item);
     setCardContent(item);
@@ -81,12 +93,15 @@ const CardList = (props: RouteComponentProps) => {
     setCategoryShow(true);
   };
   const createCard = () => {
-    console.log('新建卡片');
     const currCategory = categorys[selectIndex];
-    history.push({
-      pathname: 'editor',
-      state: { category: currCategory.ulid, type: currCategory.type },
-    });
+    if (currCategory) {
+      history.push({
+        pathname: 'editor',
+        state: { category: currCategory.ulid, type: currCategory.type },
+      });
+    } else {
+      toast.error('请先新建分类');
+    }
   };
   const saveCategoryForLocal = async (category: CategoryData) => {
     let categorysLocal: CategoryData[] = await localForage.getItem('categorys');
@@ -103,21 +118,24 @@ const CardList = (props: RouteComponentProps) => {
     return currCategorys.length;
   };
   const saveCategory = async (category: CategoryData) => {
-    console.log(category);
     await saveCategoryForLocal(category);
     const len = addCategoryList([category]);
     setSelectIndex(len - 1);
     setCategoryShow(false);
   };
+  const hideCategoryForm = () => {
+    setCategoryShow(false);
+  };
   const getCardsFromLocal = async (category: CategoryData) => {
-    const localCards: any[] = await categoryManage.getLocaCardsByUuid(
+    const localCards: any[] = await categoryManage.getLocalCardsByUlid(
       category.ulid
     );
     return localCards;
   };
   const setCurrCategoryCards = async (category: CategoryData) => {
-    const localCards = await getCardsFromLocal(category);
-    localCards.length > 0 && setCards(localCards);
+    if (category.cards) {
+      setCards(category.cards);
+    }
   };
   const getCategorysFromLocal = async () => {
     let categorysLocal: CategoryData[] = await categoryManage.getListFromLocal();
@@ -149,21 +167,29 @@ const CardList = (props: RouteComponentProps) => {
     }
   };
   const categorySync = async (index: number) => {
-    let categorysLocal: CategoryData[] = await localForage.getItem('categorys');
     const currCategory = categorys[index];
-    if (categorysLocal && currCategory) {
-      const localCards = await getCardsFromLocal(currCategory);
-      console.log(localCards);
-    }
+    categoryManage.syncCardsByUlid(currCategory.ulid);
   };
   const removeLocalCards = async () => {
-    const localCards: any[] = await localForage.getItem('cards');
+    console.log('remove');
+  };
+  const showLogin = () => {
+    setLoginFormType('login');
+    setLoginShow(true);
+  };
+  const showSignin = () => {
+    setLoginFormType('signin');
+    setLoginShow(true);
+  };
+  const hideLoginForm = () => {
+    setLoginShow(false);
   };
   useEffect(() => {
     getCategorysFromLocal();
   }, []);
   useEffect(() => {
     const currCategory = categorys[selectIndex];
+    console.log(currCategory);
     if (currCategory) {
       setCurrCategoryCards(currCategory);
     }
@@ -171,28 +197,39 @@ const CardList = (props: RouteComponentProps) => {
   return (
     <PageContainer>
       <ContentBox {...cardContentData} />
-      <GridA>
-        <CategoryList
-          categorys={categorys}
-          selectIndex={selectIndex}
-          onSelect={categorySelect}
-          onDel={categoryDel}
-          onSync={categorySync}
-        />
-      </GridA>
-      <GridB />
-      <CardsBox>
-        <CardsHorz cards={cards} itemClick={itemClick} />
-      </CardsBox>
-      <GridD>
-        <FormBox show={categoryShow}>
-          <CategoryForm onSave={saveCategory} />
-        </FormBox>
-        <GridDRight>
-          <CreateButton name='新建分类' onClick={createCategory} />
-          <CreateButton name='新建卡片' onClick={createCard} />
-        </GridDRight>
-      </GridD>
+      <GridBox>
+        <GridA>
+          <CategoryList
+            categorys={categorys}
+            selectIndex={selectIndex}
+            onSelect={categorySelect}
+            onDel={categoryDel}
+            onSync={categorySync}
+          />
+        </GridA>
+        <GridB>
+          <FormBox show={loginShow}>
+            <LoginForm onHide={hideLoginForm} type={loginFormType} />
+          </FormBox>
+          <Avatar
+            onClickLogin={showLogin}
+            onClickSignIn={showSignin}
+            loginStatus={}
+          />
+        </GridB>
+        <GridC>
+          <CardsHorz cards={cards} itemClick={itemClick} />
+        </GridC>
+        <GridD>
+          <FormBox show={categoryShow}>
+            <CategoryForm onSave={saveCategory} onHide={hideCategoryForm} />
+          </FormBox>
+          <GridDRight>
+            <CreateButton name='新建分类' onClick={createCategory} />
+            <CreateButton name='新建卡片' onClick={createCard} />
+          </GridDRight>
+        </GridD>
+      </GridBox>
     </PageContainer>
   );
 };

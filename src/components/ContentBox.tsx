@@ -71,6 +71,7 @@ const ContentBox = (props: ItemData) => {
     setActive(false);
   };
   useEffect(() => {
+    console.log(props);
     if (!props.content) return;
     const { x, y } = props.center;
     setContentStyle({
@@ -79,7 +80,7 @@ const ContentBox = (props: ItemData) => {
     setTimeout(() => {
       activeCard();
     }, 200);
-  }, [props]);
+  }, [props.content]);
   return (
     <ContentContainer
       className={activeStatus ? 'active' : ''}

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CategoryData } from 'types';
-import CreateButton from './CreateButton';
-import { ulid } from 'ulid';
+import Button from './Button';
 import { toast } from 'react-toastify';
-
+import generateUlid from 'utils/generateUlid';
 const CreateContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -40,6 +39,7 @@ const ContainerBottom = styled.div`
 `;
 interface CategoryFormProps {
   onSave?: (category: CategoryData) => void;
+  onHide?: () => void;
 }
 const CategoryForm = (props: CategoryFormProps) => {
   const [title, setTitle] = useState('');
@@ -56,21 +56,28 @@ const CategoryForm = (props: CategoryFormProps) => {
       toast.error('请输入分类标题');
       return;
     }
+    const _ulid = generateUlid();
     const category: CategoryData = {
-      category: title,
+      name: title,
       desc,
       date: +new Date(),
-      auth: 'hugh',
+      authName: 'hugh',
+      authId: '',
       type: 'client',
-      ulid: ulid(),
+      ulid: _ulid,
       cards: [],
     };
     onSave && onSave(category);
+  };
+  const hide = () => {
+    const { onHide } = props;
+    onHide && onHide();
   };
   return (
     <CreateContainer>
       <CreateTitle
         maxLength='20'
+        autoFocus
         placeholder='输入分类标题'
         onChange={titleChange}
       />
@@ -80,7 +87,8 @@ const CategoryForm = (props: CategoryFormProps) => {
         onChange={descChange}
       />
       <ContainerBottom>
-        <CreateButton name='保存' onClick={save} />
+        <Button name='保存' onClick={save} />
+        <Button name='取消' onClick={hide} />
       </ContainerBottom>
     </CreateContainer>
   );

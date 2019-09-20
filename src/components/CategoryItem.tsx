@@ -65,9 +65,9 @@ const CategoryItem = (props: CategoryData & CurtomProps) => {
     <CategoryContainer select={props.select}>
       <CategoryCard>
         <div>
-          <CategoryTitle>{props.category}</CategoryTitle>
+          <CategoryTitle>{props.name}</CategoryTitle>
           <DateAuthBox>
-            <CategoryAuth>{props.auth}</CategoryAuth>
+            <CategoryAuth>{props.authName}</CategoryAuth>
             <CategoryDate>{formatDate(props.date)}</CategoryDate>
           </DateAuthBox>
         </div>

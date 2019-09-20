@@ -1,6 +1,8 @@
 import { CardData } from 'types';
 import Ajax from './fetch_until';
-interface LoginData {
+import { CategoryData } from 'types';
+
+interface AuthParams {
   username: string;
   password: string;
 }
@@ -37,5 +39,20 @@ export default {
       };
     }
     return Ajax.get('cards', config);
+  },
+  syncCategory(data: CategoryData) {
+    return Ajax.post('category/sync', {
+      json: data,
+    });
+  },
+  login(data: AuthParams) {
+    return Ajax.post('auth/login', {
+      json: data,
+    });
+  },
+  signin(data: AuthParams) {
+    return Ajax.post('auth/signin', {
+      json: data,
+    });
   },
 };

@@ -28,17 +28,19 @@ const api = ky.create({
               throw new Error(data);
             }
           } else {
-            throw new Error('Fetch error:');
+            toast.error('系统异常');
+            // throw new Error('Fetch error:');
           }
         } else {
           if (status === 401) {
             toast('登录失效，重新登录！', {
               onClick: () => {
-                window.location.href = '/admin';
+                window.location.href = '';
               },
             });
           }
-          throw new Error(`Fetch error: ${response.statusText}`);
+          toast.error('系统异常');
+          // throw new Error(`Fetch error: ${response.statusText}`);
         }
       },
     ],

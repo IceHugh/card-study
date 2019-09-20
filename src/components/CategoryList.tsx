@@ -100,7 +100,7 @@ const CategoryList = (props: ListProps) => {
     <ListCotainer>
       {props.categorys &&
         props.categorys.map((cate, index) => (
-          <ListItemBox key={cate.category} onClick={() => itemClick(index)}>
+          <ListItemBox key={cate.ulid} onClick={() => itemClick(index)}>
             <CornerButton className='btn-del' onClick={() => btnDel(index)}>
               x
             </CornerButton>

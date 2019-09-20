@@ -25,7 +25,7 @@ const CardsHorz = (props: CardsProps) => {
       <ListContainer>
         {props.cards &&
           props.cards.map(val => (
-            <CardBox key={val.title}>
+            <CardBox key={val.ulid}>
               <CardItem {...val} onClick={props.itemClick} />
             </CardBox>
           ))}

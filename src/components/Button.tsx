@@ -11,6 +11,9 @@ const ButtonBox = styled.button`
   &:active {
     opacity: 0.7;
   }
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 interface ButtonProps {
   name?: string;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { ulid } from 'ulid';
 import styled from 'styled-components';
 import Editor from 'tui-editor';
 import 'tui-editor/dist/tui-editor.css';
@@ -14,6 +13,8 @@ import Api from 'api';
 import { CardForm, SaveButton } from 'components';
 // import { async } from 'q';
 import { CardData, CategoryData } from 'types';
+import categoryManage from 'utils/categoryManage';
+import generateUlid from 'utils/generateUlid';
 
 const PageContainer = styled.main`
   width: 100%;
@@ -104,62 +105,32 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
     //   // console.log(this.editor.getMarkdown());
     // });
   }
-  saveCardForCategory = async (cardId: string) => {
-    const categorys: CategoryData[] = await localForage.getItem('categorys');
-    if (!categorys) return;
-    const currCategory: CategoryData = categorys.filter(
-      (val: CategoryData) => val.ulid === this.category
-    )[0];
-    if (currCategory) {
-      currCategory.cards.push(cardId);
-      console.log(categorys);
-      await localForage.setItem('categorys', categorys);
-    } else {
-      toast.error('不存在该分类，请先创建分类');
-      throw Error('不存在该分类，请先创建分类');
-    }
+  saveCardForCategory = async (card: CardData) => {
+    await categoryManage.addCardByUlid(this.category, card);
+    toast.success('saved success!');
   };
   saveCard = async () => {
     const { title, desc, category } = this;
+    const { history } = this.props;
     const content: string = this.editor.getMarkdown();
     console.log(title, desc);
     if (!title && !desc && !content) {
       toast.error('请输入完整信息');
       return;
     }
-    const _ulid = ulid();
+    const _ulid = generateUlid();
     const card: CardData = {
-      auth: 'hugh',
+      authName: 'hugh',
       title,
       desc,
-      type: 'custom',
+      type: 'client',
       ulid: _ulid,
       date: +new Date(),
       content,
     };
-    await this.saveCardForCategory(_ulid);
+    await this.saveCardForCategory(card);
     await localForage.setItem('prevCategory', category);
-    this.saveCardByStorage(card);
-    // Api.createCard(card);
-  };
-  saveCardByStorage = async (card: CardData) => {
-    const { history } = this.props;
-    console.log(history);
-    try {
-      let cards = await localForage.getItem('cards');
-      if (cards && Array.isArray(cards)) {
-        cards.push(card);
-      } else {
-        cards = [card];
-      }
-      await localForage.setItem('cards', cards);
-      toast.success('saved success!');
-      history.push('/');
-      console.log('本地保存成功');
-    } catch (error) {
-      toast.error('saved error!');
-      console.log('本地保存失败');
-    }
+    history.goBack();
   };
   titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.title = e.target.value;
