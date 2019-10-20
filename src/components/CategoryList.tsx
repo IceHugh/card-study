@@ -1,7 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { CategoryData } from 'types';
 import CategoryItem from './CategoryItem';
+import iconDelete from 'assets/images/icon-delete.png';
+import iconSync from 'assets/images/icon-sync.png';
 
 const ListCotainer = styled.div`
   overflow-x: hidden;
@@ -21,59 +23,60 @@ const ListItemBox = styled.div`
     margin-bottom: 0;
   }
   &:hover {
-    .btn-del {
-      display: block;
-    }
-    .btn-sync {
-      display: block;
+    .icon-delete,
+    .icon-sync {
+      visibility: visible;
+      opacity: 1;
     }
   }
 `;
-// 左上角同步 右上角删除
-const CornerButton = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 9;
-  width: 40px;
-  height: 26px;
-  line-height: 26px;
-  text-align: center;
-  display: none;
-  font-size: 24px;
-  border-bottom-right-radius: 5px;
-  background: var(--color-3);
-  color: var(--color-2);
-  text-shadow: 0 0 10px var(--color-2);
-  cursor: pointer;
-  &:hover {
-    box-shadow: 0px 2px 10px var(--color-3);
+const RotateAni = keyframes`
+  from {
+    transform: translate3d(0, 0, 0);
   }
-  &:active {
-    opacity: 0.7;
+
+  15% {
+    transform: translate3d(-25%, 0, 0) rotate3d(0, 0, 1, -5deg);
+  }
+
+  30% {
+    transform: translate3d(20%, 0, 0) rotate3d(0, 0, 1, 3deg);
+  }
+
+  45% {
+    transform: translate3d(-15%, 0, 0) rotate3d(0, 0, 1, -3deg);
+  }
+
+  60% {
+    transform: translate3d(10%, 0, 0) rotate3d(0, 0, 1, 2deg);
+  }
+
+  75% {
+    transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
   }
 `;
-const CornerButtonSync = styled.div`
+const IconImageBox = styled.img`
+  width: 18px;
+  height: 18px;
   position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: 40px;
-  height: 26px;
-  line-height: 26px;
-  text-align: center;
-  display: none;
-  font-size: 24px;
-  border-bottom-right-radius: 5px;
-  background: var(--color-3);
-  color: var(--color-2);
-  text-shadow: 0 0 10px var(--color-2);
+  top: 5px;
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s;
   cursor: pointer;
-  &:hover {
-    box-shadow: 0px 2px 10px var(--color-3);
+  &.icon-delete {
+    left: 5px;
   }
-  &:active {
-    opacity: 0.7;
+  &.icon-sync {
+    right: 5px;
+    &:hover {
+      animation: ${RotateAni} 1s 1 forwards;
+    }
   }
 `;
 interface ListProps {
@@ -101,14 +104,16 @@ const CategoryList = (props: ListProps) => {
       {props.categorys &&
         props.categorys.map((cate, index) => (
           <ListItemBox key={cate.ulid} onClick={() => itemClick(index)}>
-            <CornerButton className='btn-del' onClick={() => btnDel(index)}>
-              x
-            </CornerButton>
-            <CornerButtonSync
-              className='btn-sync'
-              onClick={() => btnSync(index)}>
-              同步
-            </CornerButtonSync>
+            <IconImageBox
+              src={iconDelete}
+              className='icon-delete'
+              onClick={() => btnDel(index)}
+            />
+            <IconImageBox
+              src={iconSync}
+              className='icon-sync'
+              onClick={() => btnSync(index)}
+            />
             <CategoryItem {...cate} select={props.selectIndex === index} />
           </ListItemBox>
         ))}

@@ -21,7 +21,7 @@ export interface ItemData {
 
 export interface CategoryData {
   name: string;
-  date: string | number;
+  careteDate: string | number;
   authName: string;
   authId: string;
   desc?: string;

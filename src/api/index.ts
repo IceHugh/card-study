@@ -45,6 +45,9 @@ export default {
       json: data,
     });
   },
+  getCategorys() {
+    return Ajax.get('categorys');
+  },
   login(data: AuthParams) {
     return Ajax.post('auth/login', {
       json: data,

@@ -68,7 +68,7 @@ const CategoryItem = (props: CategoryData & CurtomProps) => {
           <CategoryTitle>{props.name}</CategoryTitle>
           <DateAuthBox>
             <CategoryAuth>{props.authName}</CategoryAuth>
-            <CategoryDate>{formatDate(props.date)}</CategoryDate>
+            <CategoryDate>{formatDate(props.careteDate)}</CategoryDate>
           </DateAuthBox>
         </div>
       </CategoryCard>

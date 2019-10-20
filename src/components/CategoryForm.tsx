@@ -60,7 +60,7 @@ const CategoryForm = (props: CategoryFormProps) => {
     const category: CategoryData = {
       name: title,
       desc,
-      date: +new Date(),
+      careteDate: +new Date(),
       authName: 'hugh',
       authId: '',
       type: 'client',

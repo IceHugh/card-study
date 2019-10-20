@@ -40,6 +40,7 @@ interface CategoryFormProps {
   // onLogin?: (category: CategoryData) => void;
   type?: string;
   onHide?: () => void;
+  onSuccess?: () => void;
 }
 const CategoryForm = (props: CategoryFormProps) => {
   const [formType, setFormType] = useState('sign');
@@ -98,6 +99,7 @@ const CategoryForm = (props: CategoryFormProps) => {
           localForage.setItem('token', token);
         }
         toast.success(`${message}`);
+        props.onSuccess && props.onSuccess();
       } catch (error) {
         message = error.message || '系统错误!';
         toast.success(message);

@@ -84,6 +84,7 @@ const CardList = (props: RouteComponentProps) => {
   const [categoryShow, setCategoryShow] = useState(false);
   const [loginShow, setLoginShow] = useState(false);
   const [loginFormType, setLoginFormType] = useState('login');
+  const [loginStatus, setLoginStatus] = useState(false);
   const itemClick = (item: ItemData) => {
     console.log(item);
     setCardContent(item);
@@ -173,6 +174,9 @@ const CardList = (props: RouteComponentProps) => {
   const removeLocalCards = async () => {
     console.log('remove');
   };
+  const loginOrSignInSuccess = () => {
+    setLoginStatus(true);
+  };
   const showLogin = () => {
     setLoginFormType('login');
     setLoginShow(true);
@@ -209,13 +213,19 @@ const CardList = (props: RouteComponentProps) => {
         </GridA>
         <GridB>
           <FormBox show={loginShow}>
-            <LoginForm onHide={hideLoginForm} type={loginFormType} />
+            <LoginForm
+              onHide={hideLoginForm}
+              onSuccess={loginOrSignInSuccess}
+              type={loginFormType}
+            />
           </FormBox>
-          <Avatar
-            onClickLogin={showLogin}
-            onClickSignIn={showSignin}
-            loginStatus={}
-          />
+          <GridDRight>
+            <Avatar
+              onClickLogin={showLogin}
+              onClickSignIn={showSignin}
+              loginStatus={loginStatus}
+            />
+          </GridDRight>
         </GridB>
         <GridC>
           <CardsHorz cards={cards} itemClick={itemClick} />

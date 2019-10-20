@@ -10,7 +10,8 @@ interface Routes {
   component?: FC | any;
 }
 const CardEditor = loadable(() => import('../pages/CardEditor'));
-const CardList = loadable(() => import('../pages/CardList'));
+const Home = loadable(() => import('../pages/Home'));
+const SearchList = loadable(() => import('../pages/SearchList'));
 const routes: Routes[] = [
   {
     path: '/editor',
@@ -18,7 +19,11 @@ const routes: Routes[] = [
   },
   {
     path: '/',
-    component: CardList,
+    component: Home,
+  },
+  {
+    path: '/list',
+    component: SearchList,
   },
 ];
 const router = () => {

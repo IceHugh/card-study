@@ -49,7 +49,7 @@ const AvatarImage = styled.img`
 `;
 
 interface AvatarProps {
-  loginStatus?: string;
+  loginStatus?: boolean;
   onClickLogin?: () => void;
   onClickSignIn?: () => void;
 }
@@ -62,6 +62,7 @@ const Avatar = (props: AvatarProps) => {
     handler && handler();
   };
   useEffect(() => {
+    console.log(loginStatus);
     if (loginStatus) {
       setShowAvatar(true);
     }
