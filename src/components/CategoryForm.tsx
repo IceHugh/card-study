@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { CategoryData } from 'types';
-import Button from './Button';
+import Button from './CustomButton';
 import { toast } from 'react-toastify';
 import generateUlid from 'utils/generateUlid';
 const CreateContainer = styled.div`

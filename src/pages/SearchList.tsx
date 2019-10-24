@@ -1,47 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import { CategoryItem } from 'components';
-import { CategoryData } from 'types';
+import { CategoryItem, MainSearch } from 'components';
+// import { CategoryData } from 'types';
 import Api from 'api';
+import IconBack from 'assets/images/icon-back.png';
 
 const ListContainer = styled.section`
-  /* display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around; */
   width: 100%;
   height: 100%;
-  padding: 20px;
   background: #000;
-  /* overflow-y: auto; */
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  grid-template-areas: 'a b b' 'a b b' 'c c c';
+  grid-template-rows: 120px 1fr;
 `;
-const GridBoxA = styled.div`
-  background: red;
+const GridBoxA = styled.header`
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 2fr) 1fr;
+  justify-items: center;
+  align-items: center;
+`;
+const AItem = styled.div`
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;
 const GridBoxB = styled.div`
-  background: yellow;
+  padding: 20px;
+  max-height: 100%;
+  overflow: hidden;
+`;
+const BContent = styled.div`
+  overflow-y: auto;
+  max-height: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-gap: 20px;
+  justify-content: space-between;
 `;
 const ItemBox = styled.div`
   width: 180px;
   height: 120px;
   border-radius: var(--border-radius-button);
   background: var(--color-1);
-  margin: 0 0 15px 0;
+  /* margin: 0 0 15px 0; */
 `;
-const ShapeContainer = styled.aside`
-  /* width: 100px;
-  height: 100px;
-  z-index: 10;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: red; */
+const BackButton = styled.img`
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  transform: translate(20px);
 `;
 const SearchList = (props: RouteComponentProps) => {
   const { history } = props;
@@ -57,6 +70,9 @@ const SearchList = (props: RouteComponentProps) => {
       console.log(error);
     }
   };
+  const goBack = () => {
+    history.goBack();
+  };
   const testData = Array.from({ length: 100 }).fill(1);
   useEffect(() => {
     getCagegorys();
@@ -64,15 +80,23 @@ const SearchList = (props: RouteComponentProps) => {
   return (
     <ListContainer>
       <GridBoxA>
-        {/* {categorys.length > 0 &&
-          testData.map(item => (
-            <ItemBox key={item}>
-              <CategoryItem {...categorys[0]} />
-            </ItemBox>
-          ))} */}
+        <AItem>
+          <BackButton src={IconBack} onClick={goBack} />
+        </AItem>
+        <AItem>
+          <MainSearch />
+        </AItem>
+        <AItem></AItem>
       </GridBoxA>
       <GridBoxB>
-        <ShapeContainer />
+        <BContent>
+          {categorys.length > 0 &&
+            testData.map(item => (
+              <ItemBox key={item}>
+                <CategoryItem {...categorys[0]} />
+              </ItemBox>
+            ))}
+        </BContent>
       </GridBoxB>
     </ListContainer>
   );

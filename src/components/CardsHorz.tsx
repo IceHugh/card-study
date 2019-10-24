@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { CardData, ItemData } from 'types';
 import CardItem from './CardItem';

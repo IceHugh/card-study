@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import Button from './CustomButton';
 import { toast } from 'react-toastify';
 import md5 from 'md5';
 import Api from 'api';
@@ -34,7 +34,7 @@ const ContainerBottom = styled.div`
   display: flex;
   justify-content: center;
 `;
-type TypeProp = 'login' | 'sign';
+// type TypeProp = 'login' | 'sign';
 interface CategoryFormProps {
   // onLogin?: (category: CategoryData) => void;
   // onLogin?: (category: CategoryData) => void;

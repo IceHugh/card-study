@@ -9,10 +9,10 @@ import localForage from 'localforage';
 import 'codemirror/lib/codemirror.css';
 import 'styles/pages/Editor.css';
 import 'highlight.js/styles/atelier-lakeside-dark.css';
-import Api from 'api';
+// import Api from 'api';
 import { CardForm, SaveButton } from 'components';
 // import { async } from 'q';
-import { CardData, CategoryData } from 'types';
+import { CardData } from 'types';
 import categoryManage from 'utils/categoryManage';
 import generateUlid from 'utils/generateUlid';
 

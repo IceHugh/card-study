@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import localForage from 'localforage';
 import {
   ContentBox,
-  CreateButton,
+  CustomButton,
   CardsHorz,
   CategoryList,
   CategoryForm,
@@ -65,6 +65,10 @@ const GridDRight = styled.div`
   justify-content: center;
   flex: 1;
 `;
+const AvatarBox = styled.div`
+  margin: 0 100px;
+`;
+
 const FormBox = styled.div`
   border-top-left-radius: 10px;
   height: 100%;
@@ -185,11 +189,21 @@ const CardList = (props: RouteComponentProps) => {
     setLoginFormType('signin');
     setLoginShow(true);
   };
+  const hasLogin = () => {
+    const token = localForage.getItem('token');
+    if (token) {
+      setLoginStatus(true);
+    }
+  };
   const hideLoginForm = () => {
     setLoginShow(false);
   };
+  const toSearchList = () => {
+    history.push('/list');
+  };
   useEffect(() => {
     getCategorysFromLocal();
+    hasLogin();
   }, []);
   useEffect(() => {
     const currCategory = categorys[selectIndex];
@@ -220,11 +234,14 @@ const CardList = (props: RouteComponentProps) => {
             />
           </FormBox>
           <GridDRight>
-            <Avatar
-              onClickLogin={showLogin}
-              onClickSignIn={showSignin}
-              loginStatus={loginStatus}
-            />
+            {!loginShow && <CustomButton name='搜索' onClick={toSearchList} />}
+            <AvatarBox>
+              <Avatar
+                onClickLogin={showLogin}
+                onClickSignIn={showSignin}
+                loginStatus={loginStatus}
+              />
+            </AvatarBox>
           </GridDRight>
         </GridB>
         <GridC>
@@ -235,8 +252,8 @@ const CardList = (props: RouteComponentProps) => {
             <CategoryForm onSave={saveCategory} onHide={hideCategoryForm} />
           </FormBox>
           <GridDRight>
-            <CreateButton name='新建分类' onClick={createCategory} />
-            <CreateButton name='新建卡片' onClick={createCard} />
+            <CustomButton name='新建分类' onClick={createCategory} />
+            <CustomButton name='新建卡片' onClick={createCard} />
           </GridDRight>
         </GridD>
       </GridBox>

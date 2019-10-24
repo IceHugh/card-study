@@ -19,7 +19,7 @@ interface ButtonProps {
   name?: string;
   onClick?: () => void;
 }
-const CreateButton = (props: ButtonProps) => {
+const CustomButton = (props: ButtonProps) => {
   return <ButtonBox onClick={props.onClick}>{props.name || '新建'}</ButtonBox>;
 };
-export default CreateButton;
+export default CustomButton;
