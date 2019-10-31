@@ -44,8 +44,10 @@
     "@typescript-eslint/eslint-plugin": "^1.12.0",
     "@typescript-eslint/parser": "^1.12.0",
     "babel-plugin-import": "^1.12.0",
+    "commitizen": "^4.0.3",
     "compression-webpack-plugin": "^3.0.0",
     "customize-cra": "^0.2.13",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint-config-prettier": "^6.0.0",
     "eslint-config-react": "^1.1.7",
     "eslint-plugin-prettier": "^3.1.0",
@@ -72,7 +74,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npx git-cz"
+      "pre-commit": "lint-staged && git-cz"
     }
   },
   "lint-staged": {
@@ -80,5 +82,10 @@
       "prettier --single-quote --write",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
