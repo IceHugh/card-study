@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import 'styles/tui-theme.css';
 import styled from 'styled-components';
 import Viewer from 'tui-editor/dist/tui-editor-Viewer';
 import 'highlight.js/styles/atelier-lakeside-dark.css';
 
-import 'styles/tui-theme.css';
 const ViewerContainer = styled.section`
   width: 100%;
   min-height: 100%;
