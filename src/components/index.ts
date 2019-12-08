@@ -10,3 +10,4 @@ export { default as CategoryForm } from './CategoryForm';
 export { default as LoginForm } from './LoginForm';
 export { default as Avatar } from './Avatar';
 export { default as MainSearch } from './MainSearch';
+export { default as CardContent } from './CardContent';

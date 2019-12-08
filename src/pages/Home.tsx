@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import localForage from 'localforage';
 import {
-  ContentBox,
+  CardContent,
   CustomButton,
   CardsHorz,
   CategoryList,
@@ -27,8 +27,10 @@ const GridBox = styled.div`
   display: grid;
   overflow: hidden;
   grid-template-columns: 200px 1fr;
-  grid-template-rows: 1fr 300px 1fr;
+  grid-template-rows: ${(prop: any) =>
+    prop.show ? '120px 1fr 120px' : '1fr 300px 1fr'};
   grid-template-areas: 'a b' 'a c' 'a d';
+  transition: all 2s;
 `;
 const GridA = styled.div`
   grid-area: a;
@@ -82,6 +84,7 @@ const CardList = (props: RouteComponentProps) => {
   const { history } = props;
   const [cards, setCards] = useState();
   const [cardContentData, setCardContent] = useState();
+  const [showContent, setShowContent] = useState(false);
   const [selectIndex, setSelectIndex] = useState(-1);
   const initCaregeorys: CategoryData[] = [];
   const [categorys, setCategorys] = useState(initCaregeorys);
@@ -91,6 +94,7 @@ const CardList = (props: RouteComponentProps) => {
   const [loginStatus, setLoginStatus] = useState(false);
   const itemClick = (item: ItemData) => {
     console.log(item);
+    setShowContent(true);
     setCardContent(item);
   };
   const createCategory = () => {
@@ -214,8 +218,7 @@ const CardList = (props: RouteComponentProps) => {
   }, [selectIndex]);
   return (
     <PageContainer>
-      <ContentBox {...cardContentData} />
-      <GridBox>
+      <GridBox show={showContent}>
         <GridA>
           <CategoryList
             categorys={categorys}
@@ -245,7 +248,14 @@ const CardList = (props: RouteComponentProps) => {
           </GridDRight>
         </GridB>
         <GridC>
-          <CardsHorz cards={cards} itemClick={itemClick} />
+          {showContent ? (
+            <CardContent
+              {...cardContentData}
+              close={() => setShowContent(false)}
+            />
+          ) : (
+            <CardsHorz cards={cards} itemClick={itemClick} />
+          )}
         </GridC>
         <GridD>
           <FormBox show={categoryShow}>

@@ -12,7 +12,6 @@ const CategoryContainer = styled.div`
   cursor: pointer;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: ${(prop: any) => (prop.select ? '0 0 5px #fff' : '')};
 `;
 const CategoryCard = styled.div`
   position: relative;

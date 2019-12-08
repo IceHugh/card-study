@@ -56,7 +56,7 @@ const CardContent = styled.div`
 // interface ContentData {
 //   activeStatus
 // }
-const ContentBox = (props: ItemData) => {
+const ContentBox = ({ content, ...props }: ItemData) => {
   const [activeStatus, setActive] = useState(false);
   const [contentStyle, setContentStyle] = useState();
   const activeCard = () => {
@@ -72,7 +72,7 @@ const ContentBox = (props: ItemData) => {
   };
   useEffect(() => {
     console.log(props);
-    if (!props.content) return;
+    if (!content) return;
     const { x, y } = props.center;
     setContentStyle({
       transformOrigin: `${x}px ${y}px`,
@@ -80,16 +80,14 @@ const ContentBox = (props: ItemData) => {
     setTimeout(() => {
       activeCard();
     }, 200);
-  }, [props.content]);
+  }, [content]);
   return (
     <ContentContainer
       className={activeStatus ? 'active' : ''}
       style={contentStyle}>
       <ContentMask onClick={deactiveCard} />
       <CardContent className={activeStatus ? 'content_active' : ''}>
-        {activeStatus && (
-          <MdViewer viewContent={props.content} viewHeight={600} />
-        )}
+        {activeStatus && <MdViewer viewContent={content} viewHeight={600} />}
       </CardContent>
     </ContentContainer>
   );

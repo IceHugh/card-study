@@ -18,6 +18,8 @@ const ListItemBox = styled.div`
   border-radius: 5px;
   overflow: hidden;
   background: var(--color-1);
+  box-shadow: ${(prop: any) =>
+    prop.select ? '0 0 20px 5px var(--color-3)' : ''};
   margin: 0 auto 10px;
   &:last-of-type {
     margin-bottom: 0;
@@ -31,7 +33,7 @@ const ListItemBox = styled.div`
   }
 `;
 const RotateAni = keyframes`
-  from {
+  0% {
     transform: translate3d(0, 0, 0);
   }
 
@@ -53,10 +55,6 @@ const RotateAni = keyframes`
 
   75% {
     transform: translate3d(-5%, 0, 0) rotate3d(0, 0, 1, -1deg);
-  }
-
-  to {
-    transform: translate3d(0, 0, 0);
   }
 `;
 const IconImageBox = styled.img`
@@ -103,7 +101,10 @@ const CategoryList = (props: ListProps) => {
     <ListCotainer>
       {props.categorys &&
         props.categorys.map((cate, index) => (
-          <ListItemBox key={cate.ulid} onClick={() => itemClick(index)}>
+          <ListItemBox
+            select={props.selectIndex === index}
+            key={cate.ulid}
+            onClick={() => itemClick(index)}>
             <IconImageBox
               src={iconDelete}
               className='icon-delete'

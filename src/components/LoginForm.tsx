@@ -42,7 +42,7 @@ interface CategoryFormProps {
   onHide?: () => void;
   onSuccess?: () => void;
 }
-const CategoryForm = (props: CategoryFormProps) => {
+const CategoryForm = ({ type, ...props }: CategoryFormProps) => {
   const [formType, setFormType] = useState('sign');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -94,7 +94,7 @@ const CategoryForm = (props: CategoryFormProps) => {
       try {
         const loginData: any = await ajaxPromise(authParams).json();
         console.log(loginData);
-        const { token, categorys } = loginData.data;
+        const { token } = loginData.data;
         if (token) {
           localForage.setItem('token', token);
         }
@@ -108,8 +108,8 @@ const CategoryForm = (props: CategoryFormProps) => {
     }
   };
   useEffect(() => {
-    props.type && setFormType(props.type);
-  }, [props.type]);
+    type && setFormType(type);
+  }, [type]);
   return (
     <FormContainer>
       <CotainerTop>
