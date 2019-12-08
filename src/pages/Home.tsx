@@ -46,6 +46,7 @@ const GridB = styled.div`
 `;
 const GridC = styled.div`
   width: 100%;
+  min-height: 100%;
   min-width: 100%;
   grid-area: c;
 `;

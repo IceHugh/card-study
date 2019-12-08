@@ -8,6 +8,7 @@ const CardContent = styled.div`
   height: 100%;
   width: 100%;
   max-width: 900px;
+  overflow-y: auto;
   margin: 0 auto;
   padding: 20px;
   position: relative;
