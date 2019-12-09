@@ -25,7 +25,7 @@ const api = ky.create({
               console.log(data instanceof Response);
               return data;
             } else {
-              throw new Error(data);
+              throw data;
             }
           } else {
             toast.error('系统异常');

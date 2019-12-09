@@ -101,7 +101,7 @@ const CategoryForm = ({ type, ...props }: CategoryFormProps) => {
         toast.success(`${message}`);
         props.onSuccess && props.onSuccess();
       } catch (error) {
-        message = error.message || '系统错误!';
+        message = error.msg || '系统错误!';
         toast.success(message);
       }
       hide();

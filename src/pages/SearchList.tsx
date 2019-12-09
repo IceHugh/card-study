@@ -76,7 +76,7 @@ const SearchList = (props: RouteComponentProps) => {
   const testData = Array.from({ length: 100 }).fill(1);
   useEffect(() => {
     getCagegorys();
-  });
+  }, []);
   return (
     <ListContainer>
       <GridBoxA>

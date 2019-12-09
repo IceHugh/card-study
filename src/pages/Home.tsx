@@ -105,7 +105,7 @@ const CardList = (props: RouteComponentProps) => {
   const createCard = () => {
     const currCategory = categorys[selectIndex];
     if (currCategory) {
-      history.push({
+      history.replace({
         pathname: 'editor',
         state: { category: currCategory.ulid, type: currCategory.type },
       });
@@ -194,8 +194,9 @@ const CardList = (props: RouteComponentProps) => {
     setLoginFormType('signin');
     setLoginShow(true);
   };
-  const hasLogin = () => {
-    const token = localForage.getItem('token');
+  const hasLogin = async () => {
+    const token = await localForage.getItem('token');
+    console.log(token);
     if (token) {
       setLoginStatus(true);
     }
