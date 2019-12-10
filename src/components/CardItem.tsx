@@ -8,7 +8,7 @@ const CardContainer = styled.section`
   overflow: hidden;
   border-radius: var(--border-radius-main);
   background: var(--color-2);
-  box-shadow: 0 0 20px var(--color-2);
+  box-shadow: 0 0 5px var(--color-2);
   position: relative;
   cursor: pointer;
   text-align: center;

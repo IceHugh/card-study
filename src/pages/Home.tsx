@@ -105,7 +105,7 @@ const CardList = (props: RouteComponentProps) => {
   const createCard = () => {
     const currCategory = categorys[selectIndex];
     if (currCategory) {
-      history.replace({
+      history.push({
         pathname: 'editor',
         state: { category: currCategory.ulid, type: currCategory.type },
       });

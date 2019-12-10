@@ -91,9 +91,9 @@ const SearchList = (props: RouteComponentProps) => {
       <GridBoxB>
         <BContent>
           {categorys.length > 0 &&
-            testData.map(item => (
+            categorys.map(item => (
               <ItemBox key={item}>
-                <CategoryItem {...categorys[0]} />
+                <CategoryItem {...item} />
               </ItemBox>
             ))}
         </BContent>

@@ -6,8 +6,10 @@ import 'styles/tui-theme.css';
 
 const ViewerContainer = styled.section`
   width: 100%;
+  height: 100%;
   min-height: 100%;
   padding: 10px;
+  overflow-y: auto;
   background: var(--tui-bg-main);
 `;
 interface ViewerProps {

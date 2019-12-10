@@ -8,11 +8,20 @@ const CardContent = styled.div`
   height: 100%;
   width: 100%;
   max-width: 900px;
-  overflow-y: auto;
   margin: 0 auto;
   padding: 20px;
   position: relative;
   /* transition: all 0.8s 0.1s; */
+`;
+const CardBox = styled.div`
+  height: 100%;
+  width: 100%;
+  padding: 10px 0;
+  overflow: hidden;
+  background: var(--tui-bg-main);
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  /* overflow-y: auto; */
 `;
 const IconImageBox = styled.img`
   position: absolute;
@@ -31,7 +40,9 @@ const ContentBox = (props: ItemData & ContentData) => {
   return (
     <CardContent>
       <IconImageBox src={iconClose} onClick={() => close && close()} />
-      <MdViewer viewContent={props.content} viewHeight={600} />
+      <CardBox>
+        <MdViewer viewContent={props.content} viewHeight={600} />
+      </CardBox>
     </CardContent>
   );
 };
