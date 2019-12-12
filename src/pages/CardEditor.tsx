@@ -52,6 +52,7 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
   private title: string = '';
   private desc: string = '';
   private category: string = '';
+  private tags: string = '';
   private cardType: string = 'custom';
   private prevCategory: string = '';
   private timer: NodeJS.Timeout | null = null;
@@ -110,7 +111,7 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
     toast.success('saved success!');
   };
   saveCard = async () => {
-    const { title, desc, category } = this;
+    const { title, desc, category, tags } = this;
     const { history } = this.props;
     const content: string = this.editor.getMarkdown();
     console.log(title, desc);
@@ -118,11 +119,13 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
       toast.error('请输入完整信息');
       return;
     }
+    const _tags = tags.split(/[，,]/);
     const _ulid = generateUlid();
     const card: CardData = {
       authName: 'hugh',
       title,
       desc,
+      tags: _tags,
       type: 'client',
       ulid: _ulid,
       date: +new Date(),
@@ -138,8 +141,8 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
   descHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.desc = e.target.value;
   };
-  categoryHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.category = e.target.value;
+  tagsHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.tags = e.target.value;
   };
   render() {
     return (
@@ -149,7 +152,7 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
             <CardForm
               titleHandler={this.titleHandler}
               descHandler={this.descHandler}
-              categoryHandler={this.categoryHandler}
+              tagsHandler={this.tagsHandler}
               defaultCategory={this.prevCategory}
             />
           </CardFormContainer>

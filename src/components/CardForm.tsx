@@ -34,7 +34,7 @@ const TextArea = styled.textarea`
 interface CardProps {
   titleHandler?: (t: any) => void;
   descHandler?: (t: any) => void;
-  categoryHandler?: (t: any) => void;
+  tagsHandler?: (t: any) => void;
   defaultCategory?: string;
 }
 const CardForm = (props: CardProps) => {
@@ -54,14 +54,13 @@ const CardForm = (props: CardProps) => {
           onChange={props.descHandler}
         />
       </CellBox>
-      {/* <CellBox>
+      <CellBox>
         <Input
           type='text'
-          defaultValue={props.defaultCategory}
-          placeholder='请输入卡片分类'
-          onChange={props.categoryHandler}
+          placeholder='请输入卡片标签，以，分隔'
+          onChange={props.tagsHandler}
         />
-      </CellBox> */}
+      </CellBox>
     </FormContainer>
   );
 };
