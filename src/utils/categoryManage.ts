@@ -1,26 +1,18 @@
-import localForage from 'localforage';
+import customStorage from 'customStorage';
 import { CardData, CategoryData } from '../types';
 import Api from 'api';
 
 async function getListFromLocal() {
-  const categorysLocal: CategoryData[] = await localForage.getItem('categorys');
+  const categorysLocal: CategoryData[] = await customStorage.categorys.get();
   return categorysLocal || [];
 }
-async function getLocalByUlid(ulid: string) {
-  const categoryLocal: CategoryData = await localForage.getItem(ulid);
-  return categoryLocal;
-}
-async function getLocalCardsByUlid(ulid: string) {
-  const categoryLocal: CategoryData = await getLocalByUlid(ulid);
-  console.log(categoryLocal);
-  return (categoryLocal && categoryLocal.cards) || [];
-}
+
 async function removeLocalByUlid(ulid: string) {
   const categorysLocal: CategoryData[] = await getListFromLocal();
   const _index = categorysLocal.findIndex(val => val.ulid === ulid);
   if (_index > -1) {
     categorysLocal.splice(_index, 1);
-    await localForage.setItem('categorys', categorysLocal);
+    await customStorage.categorys.set(categorysLocal);
     return categorysLocal;
   }
   return null;
@@ -30,10 +22,10 @@ async function removeCardsByUlid(ulid: string) {
   const currCategory = categorysLocal.find(val => val.ulid === ulid);
   if (currCategory) {
     currCategory.cards = [];
-    await localForage.setItem('categorys', categorysLocal);
+    await customStorage.categorys.set(categorysLocal);
   }
 }
-async function repaceCategoryByUlid(
+async function replaceCategoryByUlid(
   ulid: string,
   newCategory: CategoryData,
   categorys?: CategoryData[]
@@ -46,7 +38,7 @@ async function repaceCategoryByUlid(
     const _categoryIndex = _categorys.findIndex(val => val.ulid === ulid);
     if (_categoryIndex > -1) {
       _categorys[_categoryIndex] = newCategory;
-      await localForage.setItem('categorys', _categorys);
+      await customStorage.categorys.set(_categorys);
     }
   }
 }
@@ -63,7 +55,7 @@ async function syncCardsByUlid(ulid: string) {
     const serverData = await serverPromise.json();
     const serverCategory = serverData.data;
     if (serverCategory) {
-      await repaceCategoryByUlid(ulid, serverCategory, categorysLocal);
+      await replaceCategoryByUlid(ulid, serverCategory, categorysLocal);
     }
   }
 }
@@ -79,15 +71,13 @@ async function addCardByUlid(ulid: string, card: CardData) {
   const currCategory = categorysLocal.find(val => val.ulid === ulid);
   if (currCategory) {
     currCategory.cards.push(card);
-    await localForage.setItem('categorys', categorysLocal);
+    await customStorage.categorys.set(categorysLocal);
   } else {
     return null;
   }
 }
 export default {
   getListFromLocal,
-  getLocalByUlid,
-  getLocalCardsByUlid,
   removeLocalByUlid,
   removeCardsByUlid,
   syncCardsByUlid,

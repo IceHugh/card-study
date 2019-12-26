@@ -29,3 +29,6 @@ export interface CategoryData {
   type: string;
   cards: CardData[];
 }
+
+export type CategorysData = CategoryData[];
+export type CardsData = CardData[];

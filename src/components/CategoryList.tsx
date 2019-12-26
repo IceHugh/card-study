@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import { CategoryData } from 'types';
+import { CategorysData } from 'types';
 import CategoryItem from './CategoryItem';
 import iconDelete from 'assets/images/icon-delete.png';
 import iconSync from 'assets/images/icon-sync.png';
@@ -78,7 +78,7 @@ const IconImageBox = styled.img`
   }
 `;
 interface ListProps {
-  categorys?: CategoryData[];
+  categorys?: CategorysData;
   selectIndex: number;
   onSelect?: (i: number) => void;
   onDel?: (i: number) => void;

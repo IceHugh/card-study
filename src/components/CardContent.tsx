@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { ItemData } from 'types';
 import iconClose from 'assets/images/icon-close.png';

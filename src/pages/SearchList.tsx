@@ -73,7 +73,7 @@ const SearchList = (props: RouteComponentProps) => {
   const goBack = () => {
     history.goBack();
   };
-  const testData = Array.from({ length: 100 }).fill(1);
+  // const testData = Array.from({ length: 100 }).fill(1);
   useEffect(() => {
     getCagegorys();
   }, []);

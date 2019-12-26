@@ -26,7 +26,7 @@ class MdViewer extends Component<ViewerProps> {
   }
   componentDidMount() {
     const dom = this.viewer.current;
-    const { viewContent, viewHeight } = this.props;
+    const { viewContent } = this.props;
     if (dom) {
       this.mdViewer = new Viewer({
         el: dom,

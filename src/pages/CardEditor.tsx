@@ -5,11 +5,9 @@ import styled from 'styled-components';
 import Editor from 'tui-editor';
 import 'tui-editor/dist/tui-editor.css';
 import 'tui-editor/dist/tui-editor-contents.css';
-import localForage from 'localforage';
 import 'codemirror/lib/codemirror.css';
 import 'styles/pages/Editor.css';
 import 'highlight.js/styles/atelier-lakeside-dark.css';
-// import Api from 'api';
 import { CardForm, SaveButton } from 'components';
 // import { async } from 'q';
 import { CardData } from 'types';
@@ -111,8 +109,7 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
     toast.success('saved success!');
   };
   saveCard = async () => {
-    const { title, desc, category, tags } = this;
-    const { history } = this.props;
+    const { title, desc, tags } = this;
     const content: string = this.editor.getMarkdown();
     console.log(title, desc);
     if (!title && !desc && !content) {
@@ -132,7 +129,10 @@ export default class CardEditor extends Component<RouteComponentProps, State> {
       content,
     };
     await this.saveCardForCategory(card);
-    await localForage.setItem('prevCategory', category);
+    this.toHome();
+  };
+  toHome = () => {
+    const { history } = this.props;
     history.goBack();
   };
   titleHandler = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -10,16 +10,16 @@ interface Routes {
   component?: FC | any;
 }
 const CardEditor = loadable(() => import('../pages/CardEditor'));
-const Home = loadable(() => import('../pages/Home'));
+const HomeConnect = loadable(() => import('../pages/HomeConnect'));
 const SearchList = loadable(() => import('../pages/SearchList'));
 const routes: Routes[] = [
   {
-    path: '/editor',
-    component: CardEditor,
+    path: '/',
+    component: HomeConnect,
   },
   {
-    path: '/',
-    component: Home,
+    path: '/editor',
+    component: CardEditor,
   },
   {
     path: '/list',

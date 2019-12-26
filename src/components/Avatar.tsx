@@ -58,11 +58,9 @@ const Avatar = (props: AvatarProps) => {
   const [showAvatar, setShowAvatar] = useState(false);
   const loginHander = (type: string) => {
     const handler = type === 'login' ? onClickLogin : onClickSignIn;
-    console.log(handler);
     handler && handler();
   };
   useEffect(() => {
-    console.log(loginStatus);
     if (loginStatus) {
       setShowAvatar(true);
     }
